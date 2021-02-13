@@ -35,7 +35,13 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    public function registration_view($token){
+    public function registration_view(Request $request, $token){
+
+        if (! $request->hasValidSignature()) {
+            return redirect('/login');
+        }
+
+
         $invitation = Invitation::where('token', $token)->first();
 
         if($invitation==null || $invitation=="" || $invitation->status=="used"){

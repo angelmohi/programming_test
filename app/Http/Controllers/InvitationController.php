@@ -30,7 +30,6 @@ class InvitationController extends Controller
         $validator->after(function ($validator) use ($request) {
             if (Invitation::where('email', $request->input('email'))->exists()) {
                 Session::flash('email','There exists an invite with this email!');
-                //$validator->errors()->add('email', 'There exists an invite with this email!');
             }
         });
         
@@ -57,7 +56,7 @@ class InvitationController extends Controller
 
         $url = URL::temporarySignedRoute(
  
-            'register', now()->addMinutes(1), ['token' => $token], ['name' => $request->input('name')], ['email' => $request->input('email')]
+            'register', now()->addMinutes(300), ['token' => $token], ['name' => $request->input('name')], ['email' => $request->input('email')]
         );
 
         \Notification::route('mail', $request->input('email'))->notify(new InviteNotification($url));
