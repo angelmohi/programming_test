@@ -63,6 +63,11 @@
                             </div>
                         </div>
                     </form>
+                    @if(Session::has('delete'))
+                    <div class="alert alert-danger text-center" role="alert">
+                        {{Session::get('delete')}}
+                    </div>
+                    @endif
                 </div>
 
                 <div class="clearfix"></div>
